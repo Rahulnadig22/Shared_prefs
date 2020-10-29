@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Shared_preference</string>
+    <string name="login_Message">Please Enter your Login Credentials </string>
+    <string name="enter_your_user_name">Enter your user name</string>
+    <string name="enter_your_email_id">Enter your Email-ID</string>
+    <string name="user_photo">Take a picture</string>
+    <string name="login">Login</string>
+    <string name="edit">EDIT</string>
+    <string name="edit_your_details">Edit your Details</string>
+    <string name="edit_your_username">Edit your username</string>
+    <string name="edit_your_email_id">Edit your email_id</string>
+    <string name="submit">Submit</string>
+    <string name="cancel">Cancel</string>
+    <string name="new_user">NEW USER</string>
+
+</resources>
