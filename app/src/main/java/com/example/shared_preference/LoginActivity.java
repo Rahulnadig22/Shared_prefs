@@ -25,25 +25,32 @@ public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences prefManager;
     private SharedPreferences.Editor editor;
-    EditText mETusername = findViewById(R.id.user_name);
-    EditText mETuseremail = findViewById(R.id.email);
-    TextView mLoginmessage = findViewById(R.id.login_message);
-    String username = mETusername.getText().toString();
-    String email = mETuseremail.getText().toString();
+    public static String USERNAME="USERNAME";
+    public static String EMAIL = "EMAIL";
+    EditText mETusername;
+    EditText mETuseremail;
+    TextView mLoginmessage;
+    String username;
+    String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
-        SharedPreferences prefManager = getApplicationContext().getSharedPreferences("Login_trials", MODE_PRIVATE);
+        mETusername = findViewById(R.id.user_name);
+        mETuseremail = findViewById(R.id.email);
+        mLoginmessage = findViewById(R.id.login_message);
+        prefManager = getApplicationContext().getSharedPreferences("Login_trials", MODE_PRIVATE);
         editor = prefManager.edit();
 
         Button mLoginbtn = findViewById(R.id.loginbtn);
+        username = mETusername.getText().toString();
+        email = mETuseremail.getText().toString();
 
         mLoginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editor.putString("USERNAME",username);
-                editor.putString("EMAIL",email);
+                editor.putString(USERNAME,username);
+                editor.putString(EMAIL,email);
                 editor.putBoolean("LOGIN_SUCCESS",true);
                 editor.apply();
                 login();
@@ -51,16 +58,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         boolean isuserloggedin = prefManager.getBoolean("LOGIN_SUCCESS",false);
+        username = prefManager.getString(USERNAME,"");
+        email = prefManager.getString(EMAIL,"");
         if(isuserloggedin){
             login();
         }
 
     }
     private void login(){
-        Intent homescreen = new Intent(LoginActivity.this,HomeActivity.class);
-        homescreen.putExtra("USERNAME",username);
-        homescreen.putExtra("EMAIL",email);
-        startActivity(homescreen);
+        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
         finish();
     }
 }

@@ -19,14 +19,16 @@ public class HomeActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private Bitmap imagepath;
     private ImageView mUserphoto;
-    private final TextView mUsername = findViewById(R.id.display_name);
-    private final TextView mEmail = findViewById(R.id.display_email);
+    private TextView mUsername;
+    private TextView mEmail;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        mUsername = findViewById(R.id.display_name);
+        mEmail = findViewById(R.id.display_email);
 
         prefManager = getApplicationContext().getSharedPreferences("Login_trials",MODE_PRIVATE);
         editor = prefManager.edit();
@@ -34,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
 
         mUserphoto = findViewById(R.id.display_photo);
         Button mbtnEdit = findViewById(R.id.btnedit);
+        setScreen(getIntent().getExtras());
 
         mUserphoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,13 +46,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        Bundle data = getIntent().getExtras();
-        if(data != null){
-            String userName = data.getString("USERNAME");
-            String userEmail = data.getString("EMAIL");
-            mUsername.setText(userName);
-            mEmail.setText(userEmail);
-        }
         mbtnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +54,14 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
+    }
+    private void setScreen(Bundle data){
+        if(data != null){
+            String userName = data.getString(LoginActivity.USERNAME);
+            String userEmail = data.getString(LoginActivity.EMAIL);
+            mUsername.setText(userName);
+            mEmail.setText(userEmail);
+        }
     }
 
     @Override
@@ -74,11 +78,9 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
             mUserphoto.setImageBitmap(imagepath);
-//        }else if(requestCode == 101){
-//            Bundle newdata = getIntent().getExtras();
-//            if(newdata!=null){
-//
-//            }
+        }else if(requestCode == 101){
+            setScreen(data.getExtras());
+
+            }
         }
     }
-}
